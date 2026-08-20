@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-kiwi-tcms"
+version = "0.1.0"
+description = "Native Streamable HTTP MCP plugin for Kiwi TCMS (API-key auth, /mcp/)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [{ name = "Runit Solutions" }]
+dependencies = ["Django>=4.2"]
+classifiers = [
+    "Framework :: Django",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-django>=4.8",
+    "ruff>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/runitsolutions/mcp-kiwi-tcms"
+
+[project.entry-points."kiwitcms.plugins"]
+mcp = "mcp_kiwi_tcms"
+
+[tool.setuptools.packages.find]
+include = ["mcp_kiwi_tcms*"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["mcp_kiwi_tcms", "tests"]
+exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
