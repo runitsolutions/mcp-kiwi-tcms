@@ -15,7 +15,7 @@ Kiwi loads `kiwitcms.plugins` entry point `mcp = mcp_kiwi_tcms`, so URLs are mou
 
 ```bash
 ./manage.py migrate mcp_kiwi_tcms
-./manage.py kiwi_mcp_create_key --username <django-user> --name cursor
+./manage.py kiwi_mcp_create_key --username <django-user> --name claude
 ```
 
 The command prints the plaintext token **once**. Store it outside git.
@@ -30,12 +30,21 @@ curl -sS -X POST https://tms.seacrets.online/mcp/ \
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{}}}'
 ```
 
-## Cursor
+## Claude Code (QA)
+
+```bash
+claude mcp add --transport http --scope user kiwi-tcms \
+  https://tms.seacrets.online/mcp/ \
+  --header "Authorization: Bearer kiwi_mcp_…"
+```
+
+JSON (`type` is required; without it Claude Code treats the entry as stdio):
 
 ```json
 {
   "mcpServers": {
     "kiwi-tcms": {
+      "type": "http",
       "url": "https://tms.seacrets.online/mcp/",
       "headers": {
         "Authorization": "Bearer kiwi_mcp_…"
